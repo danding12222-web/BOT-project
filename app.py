@@ -194,7 +194,7 @@ def handle_message(event):
                     messages=[confirm_template]
                 )
             )
-        elif text in ('yes','no'):
+        elif text in ('yes'):
             image_url = (
                 f"{PUBLIC_BASE_URL}/"
                 "4c56fd34-62e4-438e-a366-294da5fb6bb0.jpg"
@@ -209,6 +209,21 @@ def handle_message(event):
                     messages=[image_message]
                 )
             )
+        elif text in ('no'):
+                    image_url = (
+                        f"{PUBLIC_BASE_URL}/"
+                        "1701657946268.jpg"
+                    )
+                    image_message = ImageMessage(
+                        original_content_url=image_url,
+                        preview_image_url=image_url
+                    )
+                    line_bot_api.reply_message(
+                        ReplyMessageRequest(
+                            replyToken=event.reply_token,
+                            messages=[image_message]
+                        )
+                    )
             
         # elif text == '表情符號':
         #     # 相關id可以去Line developers 官方查
