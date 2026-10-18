@@ -2,6 +2,8 @@ import random
 
 from flask import Flask, request, abort
 
+from urllib.parse import quote
+
 from linebot.v3 import (
     WebhookHandler
 )
@@ -135,14 +137,11 @@ def handle_message(event):
             # 更新上次推薦的餐點
             last_food = selected_food["name"]
 
-            # 組合圖片網址
-            base_url = request.url_root.rstrip("/")
-            image_url = f'{base_url}/static/{selected_food["thumbnail_file"]}'
+            # 組合 public 資料夾中的圖片網址
+            image_file = quote(selected_food["thumbnail_file"])
+            image_url = f"{PUBLIC_BASE_URL}/{image_file}"
 
-            # 將 http 改為 https
-            image_url = image_url.replace("http", "https")
-
-            app.logger.info("圖片網址：" + image_url)
+            app.logger.info("午餐縮圖網址：" + image_url)
 
             # 建立 Buttons Template > # 吃甚麼的物件
             what_to_eat = TemplateMessage(
@@ -153,8 +152,7 @@ def handle_message(event):
                         f'{selected_food["name"]}\n'
                         f'{selected_food["description"]}'
                     ),
-                    original_content_url=image_url,
-                    preview_image_url=image_url,
+                    thumbnail_image_url=image_url,
                     actions=[
                         URIAction(
                             label='前往點餐',
