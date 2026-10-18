@@ -43,6 +43,8 @@ from linebot.v3.webhooks import(
 import os
 
 app = Flask(__name__)
+PUBLIC_BASE_URL = "https://bot-project-one.vercel.app"
+
 
 # 建立一個自訂的連線物件
 configuration = Configuration(access_token=os.getenv('CHANNEL_ACCESS_TOKEN'))
@@ -74,31 +76,32 @@ def handle_follow(event):
     print(f'Got {event.type} event')
 
 
+
 # 餐點清單
 food_list = [
     {
         "name": "兩分肥",
         "description": "包手老闆",
         "order_url": "https://line.me/R/ti/p/@711qpheg",
-        "thumbnail": "兩分肥.jpg"
+        "thumbnail": f"{PUBLIC_BASE_URL}/兩分肥.jpg"
     },
     {
         "name": "小米食光",
         "description": "還不錯",
         "order_url": "https://line.me/R/ti/p/@823cztgp",
-        "thumbnail": "小米食光.jpg"
+        "thumbnail": f"{PUBLIC_BASE_URL}/小米食光.jpg"
     },
     {
         "name": "蛋白盒子",
         "description": "菜好吃",
         "order_url": "https://order.ocard.co/theproteinbox/w2rZ2w",
-        "thumbnail": "蛋白盒子.jpg"
+        "thumbnail": f"{PUBLIC_BASE_URL}/蛋白盒子.jpg"
     },
     {
         "name": "原初舒食",
         "description": "???",
         "order_url": "https://line.me/R/ti/p/@462bqhuz",
-        "thumbnail": "原初舒食.jpg"
+        "thumbnail": f"{PUBLIC_BASE_URL}/原初舒食.jpg"
     }
 ]
 
@@ -142,9 +145,8 @@ def handle_message(event):
                         f'{selected_food["name"]}\n'
                         f'{selected_food["description"]}'
                     ),
-                    thumbnail_image_url=(
-                        f'{selected_food["thumbnail"]}'
-                    ),
+                    thumbnail_image_url=selected_food["thumbnail"]
+                    ,
                     actions=[
                         URIAction(
                             label='前往點餐',
@@ -158,6 +160,8 @@ def handle_message(event):
                     ]
                 )
             )
+
+
             line_bot_api.reply_message(
                 ReplyMessageRequest(
                     replyToken=event.reply_token,
@@ -186,7 +190,7 @@ def handle_message(event):
             )
         elif text in ('yes','no'):
             image_message = ImageMessage(
-                image='4c56fd34-62e4-438e-a366-294da5fb6bb0.jpg',
+                image="https://bot-project-one.vercel.app/4c56fd34-62e4-438e-a366-294da5fb6bb0.jpg",
             )
             line_bot_api.reply_message(
                 ReplyMessageRequest(
