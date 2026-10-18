@@ -111,7 +111,7 @@ def handle_message(event):
         # 創造一個物件
         line_bot_api = MessagingApi(api_client)
         # 判斷使用這傳甚麼
-        if text in ('吃什麼','?'):
+        if text in ('吃什麼','?','？','吃甚麼'):
 
             # 宣告使用外部的變數
             global last_food
