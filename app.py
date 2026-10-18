@@ -26,6 +26,7 @@ from linebot.v3.messaging import(
     PostbackAction,
     URIAction,
     MessageAction,
+    ConfirmTemplate,
 
 )
 # ================================== #
@@ -78,22 +79,26 @@ food_list = [
     {
         "name": "兩分肥",
         "description": "包手老闆",
-        "order_url": "https://line.me/R/ti/p/@711qpheg"
+        "order_url": "https://line.me/R/ti/p/@711qpheg",
+        "thumbnail": "兩分肥.jpg"
     },
     {
         "name": "小米食光",
         "description": "還不錯",
-        "order_url": "https://line.me/R/ti/p/@823cztgp"
+        "order_url": "https://line.me/R/ti/p/@823cztgp",
+        "thumbnail": "小米食光.jpg"
     },
     {
         "name": "蛋白盒子",
         "description": "菜好吃",
-        "order_url": "https://order.ocard.co/theproteinbox/w2rZ2w"
+        "order_url": "https://order.ocard.co/theproteinbox/w2rZ2w",
+        "thumbnail": "蛋白盒子.jpg"
     },
     {
         "name": "原初舒食",
         "description": "???",
-        "order_url": "https://line.me/R/ti/p/@462bqhuz"
+        "order_url": "https://line.me/R/ti/p/@462bqhuz",
+        "thumbnail": "原初舒食.jpg"
     }
 ]
 
@@ -137,6 +142,9 @@ def handle_message(event):
                         f'{selected_food["name"]}\n'
                         f'{selected_food["description"]}'
                     ),
+                    thumbnail_image_url=(
+                        f'{selected_food["thumbnail"]}'
+                    ),
                     actions=[
                         URIAction(
                             label='前往點餐',
@@ -144,13 +152,12 @@ def handle_message(event):
                         ),
                         MessageAction(
                             label='再推薦一次',
-                            text='吃什麼'
+                            text='再一次'
+                            # text='吃什麼 # 取消重選
                         )
                     ]
                 )
             )
-
-
             line_bot_api.reply_message(
                 ReplyMessageRequest(
                     replyToken=event.reply_token,
@@ -160,6 +167,34 @@ def handle_message(event):
                     ]
                 )
             )
+        elif text in ('再一次'):
+            confirm_template = TemplateMessage(
+                alt_text='你確定?',
+                template=ConfirmTemplate(
+                    text='你真的確定?',
+                    actions=[
+                        MessageAction(lanel='是', text='yes'),
+                        MessageAction(label='否', text='no')
+                    ]
+                )
+            )
+            line_bot_api.reply_message(
+                ReplyMessageRequest(
+                    replyToken=event.reply_token,
+                    messages=[confirm_template]
+                )
+            )
+        elif text in ('yes','no'):
+            image_message = ImageMessage(
+                image='4c56fd34-62e4-438e-a366-294da5fb6bb0.jpg',
+            )
+            line_bot_api.reply_message(
+                ReplyMessageRequest(
+                    replyToken=event.reply_token,
+                    messages=[image_message]
+                )
+            )
+            
         # elif text == '表情符號':
         #     # 相關id可以去Line developers 官方查
         #     emojis = [
