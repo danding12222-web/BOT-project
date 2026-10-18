@@ -75,9 +75,6 @@ def callback():
 def handle_follow(event):
     print(f'Got {event.type} event')
 
-url = request.url_root
-url = url + "/static/Logo.jpg"
-url = url.replace("http", "https")
 
 # 餐點清單
 food_list = [
