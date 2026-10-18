@@ -184,7 +184,7 @@ def handle_message(event):
                 template=ConfirmTemplate(
                     text='你真的確定?',
                     actions=[
-                        MessageAction(lanel='是', text='yes'),
+                        MessageAction(label='是', text='yes'),
                         MessageAction(label='否', text='no')
                     ]
                 )
@@ -196,8 +196,13 @@ def handle_message(event):
                 )
             )
         elif text in ('yes','no'):
+            image_url = (
+                f"{PUBLIC_BASE_URL}/"
+                "4c56fd34-62e4-438e-a366-294da5fb6bb0.jpg"
+            )
             image_message = ImageMessage(
-                original_content_url="https://bot-project-one.vercel.app/4c56fd34-62e4-438e-a366-294da5fb6bb0.jpg",
+                original_content_url=image_url,
+                preview_image_url=image_url
             )
             line_bot_api.reply_message(
                 ReplyMessageRequest(
