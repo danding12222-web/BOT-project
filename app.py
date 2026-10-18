@@ -153,7 +153,8 @@ def handle_message(event):
                         f'{selected_food["name"]}\n'
                         f'{selected_food["description"]}'
                     ),
-                    # thumbnail_image_url=image_url,
+                    original_content_url=image_url,
+                    preview_image_url=image_url,
                     actions=[
                         URIAction(
                             label='前往點餐',
