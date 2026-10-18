@@ -75,7 +75,9 @@ def callback():
 def handle_follow(event):
     print(f'Got {event.type} event')
 
-
+url = request.url_root
+url = url + "/static/Logo.jpg"
+url = url.replace("http", "https")
 
 # 餐點清單
 food_list = [
@@ -83,25 +85,25 @@ food_list = [
         "name": "兩分肥",
         "description": "包手老闆",
         "order_url": "https://line.me/R/ti/p/@711qpheg",
-        "thumbnail": f"{PUBLIC_BASE_URL}/兩分肥.jpg"
+        "thumbnail_file": "兩分肥.jpg"
     },
     {
         "name": "小米食光",
         "description": "還不錯",
         "order_url": "https://line.me/R/ti/p/@823cztgp",
-        "thumbnail": f"{PUBLIC_BASE_URL}/小米食光.jpg"
+        "thumbnail_file": "小米食光.jpg"
     },
     {
         "name": "蛋白盒子",
         "description": "菜好吃",
         "order_url": "https://order.ocard.co/theproteinbox/w2rZ2w",
-        "thumbnail": f"{PUBLIC_BASE_URL}/蛋白盒子.jpg"
+        "thumbnail_file": "蛋白盒子.jpg"
     },
     {
         "name": "原初舒食",
         "description": "???",
         "order_url": "https://line.me/R/ti/p/@462bqhuz",
-        "thumbnail": f"{PUBLIC_BASE_URL}/原初舒食.jpg"
+        "thumbnail_file": "原初舒食.jpg"
     }
 ]
 
@@ -136,6 +138,15 @@ def handle_message(event):
             # 更新上次推薦的餐點
             last_food = selected_food["name"]
 
+            # 組合圖片網址
+            base_url = request.url_root.rstrip("/")
+            image_url = f'{base_url}/static/{selected_food["thumbnail_file"]}'
+
+            # 將 http 改為 https
+            image_url = image_url.replace("http", "https")
+
+            app.logger.info("圖片網址：" + image_url)
+
             # 建立 Buttons Template > # 吃甚麼的物件
             what_to_eat = TemplateMessage(
                 alt_text=f'今日推薦：{selected_food["name"]}',
@@ -145,8 +156,7 @@ def handle_message(event):
                         f'{selected_food["name"]}\n'
                         f'{selected_food["description"]}'
                     ),
-                    thumbnail_image_url=selected_food["thumbnail"]
-                    ,
+                    thumbnail_image_url=image_url,
                     actions=[
                         URIAction(
                             label='前往點餐',
