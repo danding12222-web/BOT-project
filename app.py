@@ -153,7 +153,7 @@ def handle_message(event):
                         f'{selected_food["name"]}\n'
                         f'{selected_food["description"]}'
                     ),
-                    thumbnail_image_url=image_url,
+                    # thumbnail_image_url=image_url,
                     actions=[
                         URIAction(
                             label='前往點餐',
@@ -197,7 +197,7 @@ def handle_message(event):
             )
         elif text in ('yes','no'):
             image_message = ImageMessage(
-                image="https://bot-project-one.vercel.app/4c56fd34-62e4-438e-a366-294da5fb6bb0.jpg",
+                original_content_url="https://bot-project-one.vercel.app/4c56fd34-62e4-438e-a366-294da5fb6bb0.jpg",
             )
             line_bot_api.reply_message(
                 ReplyMessageRequest(
