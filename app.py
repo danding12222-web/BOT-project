@@ -83,25 +83,25 @@ def handle_follow(event):
 food_list = [
     {
         "name": "兩分肥",
-        "description": "包手老闆",
+        "description": "包手老闆，9:20結~",
         "order_url": "https://line.me/R/ti/p/@711qpheg",
         "thumbnail_file": "兩分肥.jpg"
     },
     {
         "name": "小米食光",
-        "description": "還不錯",
+        "description": "還不錯，9:20結~",
         "order_url": "https://line.me/R/ti/p/@823cztgp",
         "thumbnail_file": "小米食光.jpg"
     },
     {
         "name": "蛋白盒子",
-        "description": "菜好吃",
+        "description": "菜好吃，9:20結~",
         "order_url": "https://order.ocard.co/theproteinbox/w2rZ2w",
         "thumbnail_file": "蛋白盒子.jpg"
     },
     {
         "name": "原初舒食",
-        "description": "???",
+        "description": "很多選項，9:20結~",
         "order_url": "https://line.me/R/ti/p/@462bqhuz",
         "thumbnail_file": "原初舒食.jpg"
     }
