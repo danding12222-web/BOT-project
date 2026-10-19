@@ -44,6 +44,7 @@ from linebot.v3.webhooks import(
 # )
 import os
 
+
 app = Flask(__name__)
 PUBLIC_BASE_URL = "https://bot-project-one.vercel.app"
 
@@ -120,7 +121,11 @@ def handle_message(event):
         # 創造一個物件
         line_bot_api = MessagingApi(api_client)
         # 判斷使用這傳甚麼
-        if text in ('吃什麼','?','？','吃甚麼'):
+        if text in ('吃什麼','?','？','吃甚麼', "吃啥",
+                    "吃什","啥","甚麼","什麼","吃哪個",
+                    "吃哪家","吃飯","吃","午餐吃什麼",
+                    "今天吃什麼","今天吃啥","重來","重骰"
+                ):
 
             # 宣告使用外部的變數
             global last_food
